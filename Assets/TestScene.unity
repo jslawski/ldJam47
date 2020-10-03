@@ -328,9 +328,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 301818003}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c11b0b7e1868dc34e86052314b5d5405, type: 3}
+  m_Script: {fileID: 11500000, guid: d8feddff0fc2893408e243b3490ee547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boiStats: {fileID: 11400000, guid: cd1a3895a19a3384cb2117ecf1098571, type: 2}
 --- !u!54 &301818005
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -543,9 +544,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 638098120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c11b0b7e1868dc34e86052314b5d5405, type: 3}
+  m_Script: {fileID: 11500000, guid: d8feddff0fc2893408e243b3490ee547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boiStats: {fileID: 11400000, guid: cd1a3895a19a3384cb2117ecf1098571, type: 2}
 --- !u!1 &1032905727
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,9 +804,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1205192280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c11b0b7e1868dc34e86052314b5d5405, type: 3}
+  m_Script: {fileID: 11500000, guid: d8feddff0fc2893408e243b3490ee547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boiStats: {fileID: 11400000, guid: cd1a3895a19a3384cb2117ecf1098571, type: 2}
 --- !u!54 &1205192282
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -926,9 +929,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1861714902}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c11b0b7e1868dc34e86052314b5d5405, type: 3}
+  m_Script: {fileID: 11500000, guid: d8feddff0fc2893408e243b3490ee547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boiStats: {fileID: 11400000, guid: cd1a3895a19a3384cb2117ecf1098571, type: 2}
 --- !u!54 &1861714904
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1095,9 +1099,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1965189507}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c11b0b7e1868dc34e86052314b5d5405, type: 3}
+  m_Script: {fileID: 11500000, guid: d8feddff0fc2893408e243b3490ee547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boiStats: {fileID: 11400000, guid: cd1a3895a19a3384cb2117ecf1098571, type: 2}
 --- !u!54 &1965189509
 Rigidbody:
   m_ObjectHideFlags: 0

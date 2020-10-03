@@ -61,7 +61,7 @@ namespace PolarCoordinates
 		public PolarCoordinate(float newRadius, float newAngle) 
 		{
 			radius = newRadius;
-			angle = newAngle;
+            angle = newAngle;
 		}
 
 		public Vector3 PolarToCartesian(Orientation orientation = Orientation.XY) 

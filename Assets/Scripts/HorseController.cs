@@ -28,6 +28,7 @@ public class HorseController : MonoBehaviour
 
     [SerializeField]
     private GameObject lassoObject;
+    private GameObject lassoInstance;
 
     private enum PlayerState { Moving, Latched };
     private PlayerState currentPlayerState;
@@ -105,7 +106,7 @@ public class HorseController : MonoBehaviour
 
     private void HandlePlayerAiming()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && this.lassoInstance == null)
         {
             StartCoroutine(HandleAiming(Camera.main.ScreenToViewportPoint(Input.mousePosition)));
         }
@@ -148,8 +149,8 @@ public class HorseController : MonoBehaviour
 
     private void LaunchLasso(Vector3 aimDirection, float magnitude)
     {
-        GameObject lassoInstance = Instantiate(this.lassoObject, this.transform.position, new Quaternion(), this.transform);
-        lassoInstance.GetComponent<LassoHook>().FireLasso(this.transform, aimDirection, magnitude);
+        this.lassoInstance = Instantiate(this.lassoObject, this.transform.position, new Quaternion(), this.transform);
+        this.lassoInstance.GetComponent<LassoHook>().FireLasso(this.transform, aimDirection, magnitude);
     }
 
     private void HandleLatchControls()
@@ -190,8 +191,8 @@ public class HorseController : MonoBehaviour
         this.PauseVelocityMovement();
         this.currentPlayerState = PlayerState.Latched;
         this.latchedBoi = target.GetComponent<BaseBoi>();
-        Debug.LogError("Subscribing to OnCapture");
         this.latchedBoi.OnCapture += LatchDisengaged;
+        this.latchedBoi.StopAllCoroutines();
     }
 
     private void LatchDisengaged()
