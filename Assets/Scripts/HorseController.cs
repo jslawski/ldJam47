@@ -9,7 +9,7 @@ public class HorseController : MonoBehaviour
     [SerializeField, Range(0, 100)]
     private float maxAcceleration = 30f;
     [SerializeField, Range(0, 100)]
-    private float maxDeceleration = 10f;
+    private float maxDeceleration = 20f;
 
     private Vector3 playerVelocity;
     private Vector3 desiredPlayerVelocity;
@@ -36,6 +36,8 @@ public class HorseController : MonoBehaviour
 
     [SerializeField]
     private LineRenderer aimingLine;
+
+    private BaseBoi latchedBoi;
 
     private void PauseVelocityMovement()
     {
@@ -135,12 +137,12 @@ public class HorseController : MonoBehaviour
             finalAimDirection = new Vector3(aimDirection.x, 0, aimDirection.y);
             normalizedMagnitude = this.GetDistance(startingPosition, endPosition) / this.maxSlingshotLaunchRadius;
 
-            this.aimingLine.SetPosition(1, aimingLine.GetPosition(0) + finalAimDirection* 10);
+            this.aimingLine.SetPosition(1, this.aimingLine.GetPosition(0) + finalAimDirection* 10);
 
             yield return null;
         }
 
-        this.aimingLine.SetPosition(1, aimingLine.GetPosition(0));
+        this.aimingLine.SetPosition(1, this.aimingLine.GetPosition(0));
         this.LaunchLasso(finalAimDirection, normalizedMagnitude);
     }
 
@@ -152,7 +154,11 @@ public class HorseController : MonoBehaviour
 
     private void HandleLatchControls()
     {
-        //Do clicky stuff here
+        this.latchedBoi.OnCapture += LatchDisengaged;
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+        {
+            this.latchedBoi.PullTowardsPosition(this.transform.position);
+        }
     }
 
     private Vector3 GetCompositeDirectionVector()
@@ -183,6 +189,16 @@ public class HorseController : MonoBehaviour
     {
         this.PauseVelocityMovement();
         this.currentPlayerState = PlayerState.Latched;
+        this.latchedBoi = target.GetComponent<BaseBoi>();
+        Debug.LogError("Subscribing to OnCapture");
+        this.latchedBoi.OnCapture += LatchDisengaged;
+    }
+
+    private void LatchDisengaged()
+    {
+        //this.latchedBoi.OnCapture -= LatchDisengaged;
+        this.latchedBoi = null;
+        this.currentPlayerState = PlayerState.Moving;
     }
 
     private void FixedUpdate()

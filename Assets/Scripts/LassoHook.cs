@@ -15,6 +15,8 @@ public class LassoHook : MonoBehaviour
 
     private Transform playerTransform;
 
+    private BaseBoi latchedBoi;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,11 +38,6 @@ public class LassoHook : MonoBehaviour
 
         return Mathf.Sqrt(xValue + zValue);
     }
-
-    /*public void TestLassoFire()
-    {
-        this.FireLasso(testLaunchVector, testLaunchMagnitude);
-    }*/
 
     public void FireLasso(Transform playerTransform, Vector3 launchVector, float normalizedLaunchMagnitude)
     {
@@ -86,11 +83,26 @@ public class LassoHook : MonoBehaviour
         this.lassoLine.SetPosition(0, this.transform.position);
         this.lassoLine.SetPosition(1, target.transform.position);
         Destroy(this.lassoTip);
+
+        this.latchedBoi = target.GetComponent<BaseBoi>();
+
+        this.latchedBoi.OnCapture += this.DestroyLasso;
+    }
+
+    private void DestroyLasso()
+    {
+        this.latchedBoi.OnCapture -= this.DestroyLasso;
+        Destroy(this.gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
         this.lassoLine.SetPosition(0, this.playerTransform.position);
+
+        if (this.latchedBoi != null)
+        {
+            this.lassoLine.SetPosition(1, this.latchedBoi.transform.position);
+        }
     }
 }

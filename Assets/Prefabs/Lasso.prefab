@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 10
-  maxSpeed: 10
+  maxSpeed: 15
   lassoLine: {fileID: 5935622195295925598}
   lassoTip: {fileID: 5935622195515344847}
   testLaunchMagnitude: 1
