@@ -6,18 +6,27 @@ public class LassoHook : MonoBehaviour
 {
     public float maxDistance = 10f;
     public float maxSpeed = 5f;
-    //public LineRenderer lassoLine;
+    public LineRenderer lassoLine;
     public GameObject lassoTip;
 
     [Range(0, 1)]
     public float testLaunchMagnitude;
     public Vector3 testLaunchVector;
 
+    private Transform playerTransform;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        this.lassoLine.SetPosition(0, this.transform.position);
+        this.lassoLine.SetPosition(1, this.lassoTip.transform.position);
+        LassoTip.OnLatched -= this.InitiateLatch;
+        LassoTip.OnLatched += this.InitiateLatch;
+    }
+
+    private void OnDestroy()
+    {
+        LassoTip.OnLatched -= this.InitiateLatch;
     }
 
     private float getDistance(Vector3 position1, Vector3 position2)
@@ -28,16 +37,18 @@ public class LassoHook : MonoBehaviour
         return Mathf.Sqrt(xValue + zValue);
     }
 
-    public void TestLassoFire()
+    /*public void TestLassoFire()
     {
         this.FireLasso(testLaunchVector, testLaunchMagnitude);
-    }
+    }*/
 
-    public void FireLasso(Vector3 launchVector, float normalizedLaunchMagnitude)
+    public void FireLasso(Transform playerTransform, Vector3 launchVector, float normalizedLaunchMagnitude)
     {
         float launchDistance = this.maxDistance * normalizedLaunchMagnitude;
 
-        StartCoroutine(LaunchLassoTip(launchVector, launchDistance));
+        this.playerTransform = playerTransform;
+
+        StartCoroutine(LaunchLassoTip(testLaunchVector, testLaunchMagnitude* this.maxDistance));
     }
 
     private IEnumerator LaunchLassoTip(Vector3 launchVector, float launchDistance)
@@ -49,24 +60,37 @@ public class LassoHook : MonoBehaviour
         {
             this.lassoTip.transform.Translate(launchVector.normalized * this.maxSpeed * Time.fixedDeltaTime);
             totalIterations++;
+            this.lassoLine.SetPosition(0, this.transform.position);
+            this.lassoLine.SetPosition(1, this.lassoTip.transform.position);
             yield return null;
         }
 
         //Pull lasso in
         //This is dumb, don't judge me
-        for (int i = 0; i < totalIterations; i++)
+        while (Mathf.Abs(this.getDistance(this.transform.position, this.lassoTip.transform.position)) > 0.1f)
         {
-            this.lassoTip.transform.Translate(-launchVector.normalized * this.maxSpeed * Time.fixedDeltaTime);
+            Vector3 returnVector = this.lassoTip.transform.position - this.playerTransform.position;
+
+            this.lassoTip.transform.Translate(-returnVector.normalized * this.maxSpeed * Time.fixedDeltaTime);
+            this.lassoLine.SetPosition(0, this.transform.position);
+            this.lassoLine.SetPosition(1, this.lassoTip.transform.position);
             yield return null;
         }
+
+        Destroy(this.gameObject);
+    }
+
+    private void InitiateLatch(GameObject target)
+    {
+        this.StopAllCoroutines();
+        this.lassoLine.SetPosition(0, this.transform.position);
+        this.lassoLine.SetPosition(1, target.transform.position);
+        Destroy(this.lassoTip);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            this.TestLassoFire();
-        }
+        this.lassoLine.SetPosition(0, this.playerTransform.position);
     }
 }

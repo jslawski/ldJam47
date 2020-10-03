@@ -24,6 +24,9 @@ public class HorseController : MonoBehaviour
     [SerializeField]
     private KeyCode rightKey;
 
+    [SerializeField]
+    private GameObject lassoObject;
+
     private void PauseVelocityMovement()
     {
         this.Body.velocity = Vector3.zero;
@@ -48,6 +51,12 @@ public class HorseController : MonoBehaviour
 
         this.desiredPlayerVelocity = compositeDirectionVector.normalized * this.maxSpeed;
         this.desiredMaxSpeedChange = this.maxAcceleration;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+       {
+            GameObject lassoInstance = Instantiate(this.lassoObject, this.transform.position, new Quaternion(), this.transform);
+            lassoInstance.GetComponent<LassoHook>().FireLasso(this.transform, Vector3.zero, 1.0f);
+       }
     }
 
     private Vector3 GetCompositeDirectionVector()
