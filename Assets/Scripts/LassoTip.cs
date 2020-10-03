@@ -9,11 +9,8 @@ public class LassoTip : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.LogError("I'M TRIGGERED!!!!!!");
-
         if (other.gameObject.tag == "boi")
         {
-            Debug.LogError("HIT!");
             LassoTip.OnLatched(other.gameObject);
         }
     }

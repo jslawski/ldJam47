@@ -29,7 +29,7 @@ public class LassoHook : MonoBehaviour
         LassoTip.OnLatched -= this.InitiateLatch;
     }
 
-    private float getDistance(Vector3 position1, Vector3 position2)
+    private float GetDistance(Vector3 position1, Vector3 position2)
     {
         float xValue = Mathf.Pow(position2.x - position1.x, 2);
         float zValue = Mathf.Pow(position2.z - position1.z, 2);
@@ -48,7 +48,7 @@ public class LassoHook : MonoBehaviour
 
         this.playerTransform = playerTransform;
 
-        StartCoroutine(LaunchLassoTip(testLaunchVector, testLaunchMagnitude* this.maxDistance));
+        StartCoroutine(LaunchLassoTip(launchVector, normalizedLaunchMagnitude * this.maxDistance));
     }
 
     private IEnumerator LaunchLassoTip(Vector3 launchVector, float launchDistance)
@@ -56,7 +56,7 @@ public class LassoHook : MonoBehaviour
         float totalIterations = 0;
 
         //Launch lasso out
-        while (Mathf.Abs(this.getDistance(this.transform.position, this.lassoTip.transform.position)) < launchDistance)
+        while (Mathf.Abs(this.GetDistance(this.transform.position, this.lassoTip.transform.position)) < launchDistance)
         {
             this.lassoTip.transform.Translate(launchVector.normalized * this.maxSpeed * Time.fixedDeltaTime);
             totalIterations++;
@@ -67,7 +67,7 @@ public class LassoHook : MonoBehaviour
 
         //Pull lasso in
         //This is dumb, don't judge me
-        while (Mathf.Abs(this.getDistance(this.transform.position, this.lassoTip.transform.position)) > 0.1f)
+        while (Mathf.Abs(this.GetDistance(this.transform.position, this.lassoTip.transform.position)) > 0.1f)
         {
             Vector3 returnVector = this.lassoTip.transform.position - this.playerTransform.position;
 
