@@ -37,6 +37,8 @@ public class HorseController : MonoBehaviour
 
     [SerializeField]
     private LineRenderer aimingLine;
+    [SerializeField]
+    private Transform aimingLineOriginTransform;
 
     private BaseBoi latchedBoi;
     private string latchedBoiName;
@@ -103,8 +105,8 @@ public class HorseController : MonoBehaviour
             return;
         }
 
-        this.aimingLine.SetPosition(0, this.transform.position);
-        this.aimingLine.SetPosition(1, this.transform.position);
+        this.aimingLine.SetPosition(0, this.aimingLineOriginTransform.position);
+        this.aimingLine.SetPosition(1, this.aimingLineOriginTransform.position);
 
         switch (this.currentPlayerState)
         {
@@ -244,7 +246,10 @@ public class HorseController : MonoBehaviour
     {
         this.pullPointsParticles.Stop();
         this.pullPointsParticles.Play();
-        GameManager.instance.IncrementScore(2);
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.IncrementScore(2);
+        }
     }
 
     private Vector3 GetCompositeDirectionVector()
@@ -296,6 +301,7 @@ public class HorseController : MonoBehaviour
         switch (this.latchedBoiName)
         {
             case "EasyPinkie":
+            case "TutorialBoi":
                 particleRenderer.material = Resources.Load<Material>("Materials/Plus10");
                 break;
             case "GoldenBoi":

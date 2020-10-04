@@ -31,6 +31,8 @@ public class CameraFollow : MonoBehaviour
     private Coroutine ImpactReturnCoroutine;
     private float cumulativeYZoom;
 
+    private static float isometricZOffset;
+
     void Awake()
     {
         CameraFollow.instance = this;
@@ -40,6 +42,13 @@ public class CameraFollow : MonoBehaviour
         this.originalYValue = this.transform.position.y;
 
         HorseController.OnPull += this.InitiateImpactZoom;
+
+        isometricZOffset = this.GetIsometricZOffset();
+    }
+
+    private float GetIsometricZOffset()
+    {
+        return Camera.main.transform.position.y * Mathf.Tan(Camera.main.transform.rotation.x);
     }
 
     private void OnDestroy()
@@ -110,6 +119,8 @@ public class CameraFollow : MonoBehaviour
 
     private IEnumerator SnapToPoint(Vector3 targetPoint)
     {
+        targetPoint = new Vector3(targetPoint.x, targetPoint.y, targetPoint.z); 
+
         while (this.GetDistance(this.transform.position, targetPoint) > 0.01f)
         {
             this.transform.position = Vector3.Lerp(this.transform.position, targetPoint, this.snapSpeed);
@@ -127,7 +138,7 @@ public class CameraFollow : MonoBehaviour
 
     public static void InitiateShowcaseSnap(Vector3 targetPoint)
     {
-        showcasePoint = targetPoint;
+        showcasePoint = new Vector3(targetPoint.x, targetPoint.y, targetPoint.z - (isometricZOffset / 2));
         followPlayer = false;
     }
 

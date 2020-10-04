@@ -55,7 +55,7 @@ public class LassoHook : MonoBehaviour
         //Launch lasso out
         while (Mathf.Abs(this.GetDistance(this.transform.position, this.lassoTip.transform.position)) < launchDistance)
         {
-            this.lassoTip.transform.Translate(launchVector.normalized * this.maxSpeed * Time.fixedDeltaTime);
+            this.lassoTip.transform.Translate(launchVector.normalized * this.maxSpeed * Time.deltaTime);
             totalIterations++;
             this.lassoLine.SetPosition(0, this.transform.position);
             this.lassoLine.SetPosition(1, this.lassoTip.transform.position);
@@ -68,7 +68,7 @@ public class LassoHook : MonoBehaviour
         {
             Vector3 returnVector = this.lassoTip.transform.position - this.playerTransform.position;
 
-            this.lassoTip.transform.Translate(-returnVector.normalized * this.maxSpeed * Time.fixedDeltaTime);
+            this.lassoTip.transform.Translate(-returnVector.normalized * this.maxSpeed * Time.deltaTime);
             this.lassoLine.SetPosition(0, this.transform.position);
             this.lassoLine.SetPosition(1, this.lassoTip.transform.position);
             yield return null;

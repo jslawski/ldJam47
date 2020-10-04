@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     {
         if (instance == null)
         {
-            instance = new GameManager();
+            instance = this;
         }
 
         this.currentPlayerScore = 0;

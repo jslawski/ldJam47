@@ -128,7 +128,10 @@ public class BaseBoi : MonoBehaviour
         {
             this.OnCapture();
             RandomBoiGenerator.boiCount--;
-            GameManager.instance.IncrementScore(this.boiStats.pointValue);
+            if (GameManager.instance != null)
+            { 
+                GameManager.instance.IncrementScore(this.boiStats.pointValue);
+            }
             Destroy(this.gameObject);
         }
     }
