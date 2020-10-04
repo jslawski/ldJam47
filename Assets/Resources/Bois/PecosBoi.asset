@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 278ccc2ca21c0e44cad2ede7557acf96, type: 3}
+  m_Name: PecosBoi
+  m_EditorClassIdentifier: 
+  pointValue: 10
+  minDistancePulledPerClick: 2
+  maxDistancePulledPerClick: 3
+  boiName: PecosBill
+  moveSpeed: 10
+  minTimeSpentMoving: 3
+  maxTimeSpentMoving: 4
+  minTimeSpentIdling: 3
+  maxTimeSpentIdling: 4
+  minTimeBeforeDirectionChange: 3
+  maxTimeBeforeDirectionChange: 5
+  animatorName: NPCPecos

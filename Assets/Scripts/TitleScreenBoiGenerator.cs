@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomBoiGenerator : MonoBehaviour
+public class TitleScreenBoiGenerator : MonoBehaviour
 {
     //BOX COLLIDER SPACE
     private float minFieldX;
@@ -16,7 +16,7 @@ public class RandomBoiGenerator : MonoBehaviour
     public GameObject baseBoiPrefab;
 
     public static int boiCount;
-    private int maxNumBois = 20;
+    private int maxNumBois = 30;
 
     private int totalBoiCount = 0;
 
@@ -28,7 +28,6 @@ public class RandomBoiGenerator : MonoBehaviour
         this.maxFieldX = generationField.transform.position.x + (generationField.size.x / 2);
         this.minFieldZ = generationField.transform.position.z - (generationField.size.z / 2);
         this.maxFieldZ = generationField.transform.position.z + (generationField.size.z / 2);
-
     }
 
     private void Update()
@@ -44,14 +43,8 @@ public class RandomBoiGenerator : MonoBehaviour
         float xValue = Random.Range(this.minFieldX, this.maxFieldX);
         float zValue = Random.Range(this.minFieldZ, this.maxFieldZ);
 
-        totalBoiCount++;
-
-        if (totalBoiCount < maxNumBois)
-        {
-            this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats = Resources.Load<BoiStats>("Bois/EasyPinkie");
-        }
         //Spawn a golden boi 1 every 10
-        else if (totalBoiCount % 10 == 0)
+        if (totalBoiCount % 10 == 0)
         {
             this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats = Resources.Load<BoiStats>("Bois/GoldenBoi");
         }
@@ -68,5 +61,6 @@ public class RandomBoiGenerator : MonoBehaviour
         Vector3 worldSpaceGenerationPosition = new Vector3(xValue, 4.0f, zValue);
         GameObject objectInstance = Instantiate(this.baseBoiPrefab, worldSpaceGenerationPosition, new Quaternion()) as GameObject;
         boiCount++;
+        totalBoiCount++;
     }
 }

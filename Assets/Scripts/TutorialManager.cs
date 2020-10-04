@@ -33,7 +33,7 @@ public class TutorialManager : MonoBehaviour
     private void TransitionScenes()
     {
         this.fadePanel.OnFadeSequenceComplete -= this.TransitionScenes;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     private void Update()

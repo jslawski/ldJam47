@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class CameraFollow : MonoBehaviour
+public class TitleScreenCameraFollow : MonoBehaviour
 {
-    public static CameraFollow instance;
+    public static TitleScreenCameraFollow instance;
 
-    public HorseController playerCharacter;
+    public GameObject playerCharacter;
 
     private Camera thisCamera;
     private Transform cameraTransform;
@@ -33,9 +34,13 @@ public class CameraFollow : MonoBehaviour
 
     private static float isometricZOffset;
 
+    public float followSpeed = 10.0f;
+
+    public FadePanelManager fadePanel;
+
     void Awake()
     {
-        CameraFollow.instance = this;
+        TitleScreenCameraFollow.instance = this;
         this.thisCamera = this.gameObject.GetComponentInChildren<Camera>();
         this.cameraTransform = this.gameObject.transform;
         this.cameraDistance = this.cameraTransform.position.y;
@@ -119,7 +124,7 @@ public class CameraFollow : MonoBehaviour
 
     private IEnumerator SnapToPoint(Vector3 targetPoint)
     {
-        targetPoint = new Vector3(targetPoint.x, targetPoint.y, targetPoint.z); 
+        targetPoint = new Vector3(targetPoint.x, targetPoint.y, targetPoint.z);
 
         while (this.GetDistance(this.transform.position, targetPoint) > 0.01f)
         {
@@ -155,7 +160,7 @@ public class CameraFollow : MonoBehaviour
 
         Vector3 shiftVector = new Vector3(0, 0, this.playerCharacter.transform.position.z - worldSpaceCenteredPosition.z);
 
-        this.cameraTransform.Translate(shiftVector.normalized * Mathf.Abs(this.playerCharacter.Body.velocity.z) * Time.deltaTime);
+        this.cameraTransform.Translate(shiftVector.normalized * this.followSpeed * Time.deltaTime);
     }
 
     private void UpdateCameraHorizontalPosition()
@@ -164,7 +169,7 @@ public class CameraFollow : MonoBehaviour
 
         Vector3 shiftVector = new Vector3(this.playerCharacter.transform.position.x - worldSpaceCenteredPosition.x, 0, 0);
 
-        this.cameraTransform.Translate(shiftVector.normalized * Mathf.Abs(this.playerCharacter.Body.velocity.x) * Time.deltaTime);
+        this.cameraTransform.Translate(shiftVector.normalized * this.followSpeed * Time.deltaTime);
     }
 
     private void InitiateImpactZoom()
@@ -186,7 +191,7 @@ public class CameraFollow : MonoBehaviour
         Vector3 targetPoint = new Vector3(showcasePoint.x, this.transform.position.y - this.impactZoomAmount, showcasePoint.z);
 
         while (Mathf.Abs(this.transform.position.y - targetPoint.y) > 0.01f)
-        {            
+        {
             this.transform.position = Vector3.Lerp(this.transform.position, targetPoint, this.impactZoomSpeed);
             yield return null;
         }
@@ -209,5 +214,17 @@ public class CameraFollow : MonoBehaviour
 
         this.transform.position = targetPoint;
         this.ImpactReturnCoroutine = null;
+    }
+
+    public void OnStartGameButtonClicked()
+    {
+        this.fadePanel.OnFadeSequenceComplete += this.LoadTutorialScene;
+        this.fadePanel.FadeToBlack();
+    }
+
+    private void LoadTutorialScene()
+    {
+        this.fadePanel.OnFadeSequenceComplete -= this.LoadTutorialScene;
+        SceneManager.LoadScene(1);
     }
 }
