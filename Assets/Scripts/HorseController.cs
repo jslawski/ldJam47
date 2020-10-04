@@ -43,6 +43,9 @@ public class HorseController : MonoBehaviour
     public delegate void PullInitiated();
     public static event PullInitiated OnPull;
 
+    public Animator animatorStateMachine;
+    public SpriteRenderer characterSprite;
+
     private void PauseVelocityMovement()
     {
         this.Body.velocity = Vector3.zero;
@@ -86,6 +89,8 @@ public class HorseController : MonoBehaviour
 
     private void Update()
     {
+        this.HandleAnimations();
+
         if (GameManager.gameFinished == true)
         {
             this.PauseVelocityMovement();
@@ -108,6 +113,37 @@ public class HorseController : MonoBehaviour
                 Debug.LogError("ERROR: Invalid Player State=" + this.currentPlayerState);
                 break;
         }
+    }
+
+    private void HandleAnimations()
+    {
+        if (this.playerVelocity.magnitude > 0)
+        {
+            this.animatorStateMachine.SetBool("moving", true);
+            if (playerVelocity.x > 0)
+            {
+                this.characterSprite.flipX = true;
+            }
+            else
+            {
+                this.characterSprite.flipX = false;
+            }
+        }
+        else
+        {
+            this.animatorStateMachine.SetBool("moving", false);
+        }
+
+        if (Input.GetMouseButton(0) || this.lassoInstance != null)
+        {
+            this.animatorStateMachine.SetBool("aimingLasso", true);
+        }
+        else
+        {
+            this.animatorStateMachine.SetBool("aimingLasso", false);
+        }
+
+        
     }
 
     private void HandlePlayerMovement()
