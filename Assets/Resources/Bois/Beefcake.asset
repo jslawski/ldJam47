@@ -16,11 +16,11 @@ MonoBehaviour:
   minDistancePulledPerClick: 0.5
   maxDistancePulledPerClick: 1
   boiName: Beefcake
-  moveSpeed: 5
+  moveSpeed: 10
   minTimeSpentMoving: 3
   maxTimeSpentMoving: 5
   minTimeSpentIdling: 3
   maxTimeSpentIdling: 5
   minTimeBeforeDirectionChange: 500
   maxTimeBeforeDirectionChange: 500
-  animatorName: EPAnimator
+  animatorName: BCAnimator
