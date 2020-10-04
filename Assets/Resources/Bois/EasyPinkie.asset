@@ -15,7 +15,7 @@ MonoBehaviour:
   pointValue: 10
   minDistancePulledPerClick: 0.5
   maxDistancePulledPerClick: 1
-  boiName: Darren
+  boiName: EasyPinkie
   moveSpeed: 2
   minTimeSpentMoving: 5
   maxTimeSpentMoving: 10

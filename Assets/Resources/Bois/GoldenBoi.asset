@@ -15,7 +15,7 @@ MonoBehaviour:
   pointValue: 50
   minDistancePulledPerClick: 0.5
   maxDistancePulledPerClick: 1
-  boiName: Darren
+  boiName: GoldenBoi
   moveSpeed: 20
   minTimeSpentMoving: 5
   maxTimeSpentMoving: 10

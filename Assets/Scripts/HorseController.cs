@@ -39,6 +39,7 @@ public class HorseController : MonoBehaviour
     private LineRenderer aimingLine;
 
     private BaseBoi latchedBoi;
+    private string latchedBoiName;
 
     public delegate void PullInitiated();
     public static event PullInitiated OnPull;
@@ -284,12 +285,27 @@ public class HorseController : MonoBehaviour
         this.latchedBoi.OnCapture += LatchDisengaged;
         this.latchedBoi.StopAllCoroutines();
         this.latchedBoi.SignalLatch();
+        this.latchedBoiName = this.latchedBoi.boiStats.name;
         CameraFollow.InitiateShowcaseSnap(this.GetMidpoint(target.transform.position));
     }
 
     private void LatchDisengaged()
     {
+        ParticleSystemRenderer particleRenderer = this.wrangledPointsParticles.GetComponent<ParticleSystemRenderer>();
         //this.latchedBoi.OnCapture -= LatchDisengaged;
+        switch (this.latchedBoiName)
+        {
+            case "EasyPinkie":
+                particleRenderer.material = Resources.Load<Material>("Materials/Plus10");
+                break;
+            case "GoldenBoi":
+                particleRenderer.material = Resources.Load<Material>("Materials/GoldBar");
+                break;
+            default:
+                Debug.LogError("Error: Unknown Boi Type=" + this.latchedBoi.boiStats.boiName);
+                break;
+        }
+
         this.latchedBoi = null;
         this.currentPlayerState = PlayerState.Moving;
         CameraFollow.ReturnToFollow();

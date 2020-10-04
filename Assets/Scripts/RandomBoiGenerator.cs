@@ -41,7 +41,7 @@ public class RandomBoiGenerator : MonoBehaviour
         float xValue = Random.Range(this.minFieldX, this.maxFieldX);
         float zValue = Random.Range(this.minFieldZ, this.maxFieldZ);
 
-        if (boiCount % 5 == 0 && boiCount > 20)
+        if (boiCount % 5 == 0 /*&& boiCount > 20*/)
         {
             this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats = Resources.Load<BoiStats>("Bois/GoldenBoi");
         }
