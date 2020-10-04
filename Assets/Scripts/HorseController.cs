@@ -46,6 +46,11 @@ public class HorseController : MonoBehaviour
     public Animator animatorStateMachine;
     public SpriteRenderer characterSprite;
 
+    [SerializeField]
+    private ParticleSystem pullPointsParticles;
+    [SerializeField]
+    private ParticleSystem wrangledPointsParticles;
+
     private void PauseVelocityMovement()
     {
         this.Body.velocity = Vector3.zero;
@@ -66,7 +71,7 @@ public class HorseController : MonoBehaviour
     //Gets midpoint between this game object and another designated position
     private Vector3 GetMidpoint(Vector3 otherObjectPosition)
     {
-        return new Vector3((this.transform.position.x + otherObjectPosition.x) / 2, 0, (this.transform.position.z + otherObjectPosition.z) / 2);
+        return new Vector3((this.transform.position.x + otherObjectPosition.x) / 2, Camera.main.transform.parent.transform.position.y, (this.transform.position.z + otherObjectPosition.z) / 2);
     }
 
     private void Start()
@@ -214,9 +219,10 @@ public class HorseController : MonoBehaviour
     private void HandleLatchControls()
     {
         this.latchedBoi.OnCapture += LatchDisengaged;
+
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
         {
-            GameManager.instance.IncrementScore(2);
+            this.HandleScore();
             this.latchedBoi.PullTowardsPosition(this.transform.position);
 
             //Latched boi could be destroyed after the most recent pull
@@ -231,6 +237,13 @@ public class HorseController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void HandleScore()
+    {
+        this.pullPointsParticles.Stop();
+        this.pullPointsParticles.Play();
+        GameManager.instance.IncrementScore(2);
     }
 
     private Vector3 GetCompositeDirectionVector()
@@ -280,6 +293,8 @@ public class HorseController : MonoBehaviour
         this.latchedBoi = null;
         this.currentPlayerState = PlayerState.Moving;
         CameraFollow.ReturnToFollow();
+
+        this.wrangledPointsParticles.Play();
     }
 
     private void FixedUpdate()

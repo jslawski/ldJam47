@@ -23,8 +23,8 @@ public class CameraFollow : MonoBehaviour
     private Coroutine SnapCoroutine;
 
     //Impact zoom stuff
-    private float impactZoomAmount = 0.5f;
-    private float impactZoomSpeed = 0.2f;
+    private float impactZoomAmount = 0.8f;
+    private float impactZoomSpeed = 0.4f;
     private float impactReturnZoomSpeed = 0.01f;
     private float zoomedInYValue;
     private Coroutine ImpactZoomCoroutine;

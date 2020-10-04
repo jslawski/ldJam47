@@ -16,7 +16,7 @@ public class RandomBoiGenerator : MonoBehaviour
     public GameObject baseBoiPrefab;
 
     public static int boiCount;
-    private int maxNumBois = 10;
+    private int maxNumBois = 5;
 
     private void Awake()
     {
