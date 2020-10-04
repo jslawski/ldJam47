@@ -86,6 +86,14 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()
     {
-        Application.Quit();
+        this.fadePanel.OnFadeSequenceComplete += this.ReturnToTitle;
+        this.fadePanel.FadeToBlack();
+    }
+
+    private void ReturnToTitle()
+    {
+        gameFinished = false;
+        this.fadePanel.OnFadeSequenceComplete -= this.ReturnToTitle;
+        SceneManager.LoadScene(0);
     }
 }

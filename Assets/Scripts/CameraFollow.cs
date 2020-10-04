@@ -11,8 +11,8 @@ public class CameraFollow : MonoBehaviour
     private Transform cameraTransform;
     private float cameraDistance;
 
-    public float verticalViewportThreshold = 0.48f;
-    public float horizontalViewportThreshold = 0.48f;
+    public float verticalViewportThreshold = 0.5f;
+    public float horizontalViewportThreshold = 0.5f;
 
     private static bool followPlayer = true;
     private static Vector3 showcasePoint;
@@ -44,6 +44,7 @@ public class CameraFollow : MonoBehaviour
         HorseController.OnPull += this.InitiateImpactZoom;
 
         isometricZOffset = this.GetIsometricZOffset();
+        this.cumulativeYZoom = 0;
     }
 
     private float GetIsometricZOffset()

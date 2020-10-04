@@ -49,6 +49,8 @@ public class TitleScreenCameraFollow : MonoBehaviour
         HorseController.OnPull += this.InitiateImpactZoom;
 
         isometricZOffset = this.GetIsometricZOffset();
+
+        this.fadePanel.FadeFromBlack();
     }
 
     private float GetIsometricZOffset()

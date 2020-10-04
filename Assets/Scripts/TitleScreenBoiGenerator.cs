@@ -43,8 +43,8 @@ public class TitleScreenBoiGenerator : MonoBehaviour
         float xValue = Random.Range(this.minFieldX, this.maxFieldX);
         float zValue = Random.Range(this.minFieldZ, this.maxFieldZ);
 
-        //Spawn a golden boi 1 every 10
-        if (totalBoiCount % 10 == 0)
+        //Spawn a golden boi 1 every 7
+        if (totalBoiCount % 7 == 0)
         {
             this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats = Resources.Load<BoiStats>("Bois/GoldenBoi");
         }

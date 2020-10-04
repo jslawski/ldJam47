@@ -28,7 +28,6 @@ public class RandomBoiGenerator : MonoBehaviour
         this.maxFieldX = generationField.transform.position.x + (generationField.size.x / 2);
         this.minFieldZ = generationField.transform.position.z - (generationField.size.z / 2);
         this.maxFieldZ = generationField.transform.position.z + (generationField.size.z / 2);
-
     }
 
     private void Update()
@@ -50,8 +49,8 @@ public class RandomBoiGenerator : MonoBehaviour
         {
             this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats = Resources.Load<BoiStats>("Bois/EasyPinkie");
         }
-        //Spawn a golden boi 1 every 10
-        else if (totalBoiCount % 10 == 0)
+        //Spawn a golden boi 1 every 7
+        else if (totalBoiCount % 7 == 0)
         {
             this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats = Resources.Load<BoiStats>("Bois/GoldenBoi");
         }
