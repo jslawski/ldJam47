@@ -143,7 +143,14 @@ public class HorseController : MonoBehaviour
             this.animatorStateMachine.SetBool("aimingLasso", false);
         }
 
-        
+        if (this.currentPlayerState == PlayerState.Latched)
+        {
+            this.animatorStateMachine.SetBool("latched", true);
+        }
+        else
+        {
+            this.animatorStateMachine.SetBool("latched", false);
+        }
     }
 
     private void HandlePlayerMovement()
