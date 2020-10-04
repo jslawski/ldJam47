@@ -40,6 +40,9 @@ public class HorseController : MonoBehaviour
 
     private BaseBoi latchedBoi;
 
+    public delegate void PullInitiated();
+    public static event PullInitiated OnPull;
+
     private void PauseVelocityMovement()
     {
         this.Body.velocity = Vector3.zero;
@@ -172,6 +175,18 @@ public class HorseController : MonoBehaviour
         {
             GameManager.instance.IncrementScore(2);
             this.latchedBoi.PullTowardsPosition(this.transform.position);
+
+            //Latched boi could be destroyed after the most recent pull
+            //Make sure it isn't before you try to do an impact zoom 
+            if (this.latchedBoi != null)
+            {
+                //Just do this to update the midpoint
+                CameraFollow.InitiateShowcaseSnap(this.GetMidpoint(this.latchedBoi.transform.position));
+                if (OnPull != null)
+                {
+                    OnPull();
+                }
+            }
         }
     }
 

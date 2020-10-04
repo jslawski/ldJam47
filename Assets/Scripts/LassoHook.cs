@@ -64,7 +64,7 @@ public class LassoHook : MonoBehaviour
 
         //Pull lasso in
         //This is dumb, don't judge me
-        while (Mathf.Abs(this.GetDistance(this.transform.position, this.lassoTip.transform.position)) > 0.1f)
+        while (Mathf.Abs(this.GetDistance(this.transform.position, this.lassoTip.transform.position)) > 0.2f)
         {
             Vector3 returnVector = this.lassoTip.transform.position - this.playerTransform.position;
 

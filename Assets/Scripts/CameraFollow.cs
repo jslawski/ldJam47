@@ -19,7 +19,17 @@ public class CameraFollow : MonoBehaviour
     private static bool snapInitiated = false;
     private float snapSpeed = 0.3f;
     private float originalYValue;
-    private bool returnZoomInitiated = false; 
+    private bool returnZoomInitiated = false;
+    private Coroutine SnapCoroutine;
+
+    //Impact zoom stuff
+    private float impactZoomAmount = 0.5f;
+    private float impactZoomSpeed = 0.2f;
+    private float impactReturnZoomSpeed = 0.01f;
+    private float zoomedInYValue;
+    private Coroutine ImpactZoomCoroutine;
+    private Coroutine ImpactReturnCoroutine;
+    private float cumulativeYZoom;
 
     void Awake()
     {
@@ -28,6 +38,13 @@ public class CameraFollow : MonoBehaviour
         this.cameraTransform = this.gameObject.transform;
         this.cameraDistance = this.cameraTransform.position.y;
         this.originalYValue = this.transform.position.y;
+
+        HorseController.OnPull += this.InitiateImpactZoom;
+    }
+
+    private void OnDestroy()
+    {
+        HorseController.OnPull -= this.InitiateImpactZoom;
     }
 
     private float GetDistance(Vector3 position1, Vector3 position2)
@@ -60,8 +77,10 @@ public class CameraFollow : MonoBehaviour
             {
                 if (this.returnZoomInitiated == false)
                 {
-                    StartCoroutine(this.SnapToPoint(new Vector3(this.transform.position.x, this.originalYValue, this.transform.position.z)));
+                    StopAllCoroutines();
+                    this.SnapCoroutine = StartCoroutine(this.SnapToPoint(new Vector3(this.transform.position.x, this.originalYValue, this.transform.position.z)));
                     this.returnZoomInitiated = true;
+                    this.cumulativeYZoom = 0;
                 }
                 return;
             }
@@ -83,7 +102,7 @@ public class CameraFollow : MonoBehaviour
         {
             if (snapInitiated == false)
             {
-                StartCoroutine(this.SnapToPoint(showcasePoint));
+                this.SnapCoroutine = StartCoroutine(this.SnapToPoint(showcasePoint));
                 snapInitiated = true;
             }
         }
@@ -91,10 +110,6 @@ public class CameraFollow : MonoBehaviour
 
     private IEnumerator SnapToPoint(Vector3 targetPoint)
     {
-        Debug.LogError("Current Camera Position: " + this.transform.position);
-        Debug.LogError("Target Position: " + targetPoint);
-        Debug.LogError("Distance: " + this.GetDistance(this.transform.position, targetPoint));
-
         while (this.GetDistance(this.transform.position, targetPoint) > 0.01f)
         {
             this.transform.position = Vector3.Lerp(this.transform.position, targetPoint, this.snapSpeed);
@@ -103,6 +118,11 @@ public class CameraFollow : MonoBehaviour
 
         this.transform.position = targetPoint;
         this.returnZoomInitiated = false;
+        this.zoomedInYValue = this.transform.position.y;
+
+        this.SnapCoroutine = null;
+        this.ImpactZoomCoroutine = null;
+        this.ImpactReturnCoroutine = null;
     }
 
     public static void InitiateShowcaseSnap(Vector3 targetPoint)
@@ -134,5 +154,49 @@ public class CameraFollow : MonoBehaviour
         Vector3 shiftVector = new Vector3(this.playerCharacter.transform.position.x - worldSpaceCenteredPosition.x, 0, 0);
 
         this.cameraTransform.Translate(shiftVector.normalized * Mathf.Abs(this.playerCharacter.Body.velocity.x) * Time.deltaTime);
+    }
+
+    private void InitiateImpactZoom()
+    {
+        if (this.ImpactZoomCoroutine == null && this.SnapCoroutine == null)
+        {
+            this.ImpactZoomCoroutine = StartCoroutine(this.ImpactZoom());
+        }
+    }
+
+    private IEnumerator ImpactZoom()
+    {
+        if (this.ImpactReturnCoroutine != null)
+        {
+            StopCoroutine(this.ImpactReturnCoroutine);
+        }
+
+        this.cumulativeYZoom += this.impactZoomAmount;
+        Vector3 targetPoint = new Vector3(showcasePoint.x, this.transform.position.y - this.impactZoomAmount, showcasePoint.z);
+
+        while (Mathf.Abs(this.transform.position.y - targetPoint.y) > 0.01f)
+        {            
+            this.transform.position = Vector3.Lerp(this.transform.position, targetPoint, this.impactZoomSpeed);
+            yield return null;
+        }
+
+        this.transform.position = targetPoint;
+
+        this.ImpactReturnCoroutine = StartCoroutine(this.ReturnFromImpactZoom());
+        this.ImpactZoomCoroutine = null;
+    }
+
+    private IEnumerator ReturnFromImpactZoom()
+    {
+        Vector3 targetPoint = new Vector3(this.transform.position.x, this.zoomedInYValue, this.transform.position.z);
+
+        while (this.transform.position.y < targetPoint.y)
+        {
+            this.transform.position = Vector3.Lerp(this.transform.position, targetPoint, this.impactReturnZoomSpeed);
+            yield return null;
+        }
+
+        this.transform.position = targetPoint;
+        this.ImpactReturnCoroutine = null;
     }
 }
