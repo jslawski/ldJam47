@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
 
     public static bool gameFinished = false;
 
+    public GameObject countdown;
+    public bool preGameState = true;
+
     private void Awake()
     {
         if (instance == null)
@@ -28,9 +31,25 @@ public class GameManager : MonoBehaviour
 
         this.currentPlayerScore = 0;
         gameFinished = false;
+    }
+
+    private void Start()
+    {
+        this.countdown = GameObject.Find("Countdown");
+        StartCoroutine(this.WaitForCountdown());
+    }
+
+    private IEnumerator WaitForCountdown()
+    {
+        while (this.countdown != null)
+        {
+            yield return null;
+        }
+
         gameTimer.StartTimer(timePerRoundInSeconds);
         gameTimer.OnTimerEnded -= this.GameCompleted;
         gameTimer.OnTimerEnded += this.GameCompleted;
+        this.preGameState = false;
     }
 
     private void GameCompleted()

@@ -172,7 +172,7 @@ public class HorseController : MonoBehaviour
 
     private void HandlePlayerAiming()
     {
-        if (Input.GetMouseButtonDown(0) && this.lassoInstance == null)
+        if (Input.GetMouseButtonDown(0) && this.lassoInstance == null && GameManager.instance.preGameState == false)
         {
             StartCoroutine(HandleAiming(Camera.main.ScreenToViewportPoint(Input.mousePosition)));
         }
