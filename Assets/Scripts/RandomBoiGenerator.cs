@@ -16,7 +16,7 @@ public class RandomBoiGenerator : MonoBehaviour
     public GameObject baseBoiPrefab;
 
     public static int boiCount;
-    private int maxNumBois = 5;
+    private int maxNumBois = 20;
 
     private void Awake()
     {
@@ -41,7 +41,16 @@ public class RandomBoiGenerator : MonoBehaviour
         float xValue = Random.Range(this.minFieldX, this.maxFieldX);
         float zValue = Random.Range(this.minFieldZ, this.maxFieldZ);
 
-        Vector3 worldSpaceGenerationPosition = new Vector3(xValue, 0.0f, zValue);
+        if (boiCount % 5 == 0 && boiCount > 20)
+        {
+            this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats = Resources.Load<BoiStats>("Bois/GoldenBoi");
+        }
+        else
+        {
+            this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats = Resources.Load<BoiStats>("Bois/EasyPinkie");
+        }
+
+        Vector3 worldSpaceGenerationPosition = new Vector3(xValue, 2.0f, zValue);
         GameObject objectInstance = Instantiate(this.baseBoiPrefab, worldSpaceGenerationPosition, new Quaternion()) as GameObject;
         boiCount++;
     }

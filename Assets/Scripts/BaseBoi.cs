@@ -16,9 +16,16 @@ public class BaseBoi : MonoBehaviour
     public Animator characterAnimator;
     public SpriteRenderer characterSprite;
 
+    public ParticleSystem goldenBoiSparkle;
+
     private void Start()
     {
         this.characterAnimator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animators/" + this.boiStats.animatorName);
+
+        if (this.boiStats.animatorName == "GBAnimator")
+        {
+            this.goldenBoiSparkle.Play();
+        }
 
         StartCoroutine(this.MoveInDirection());
     }

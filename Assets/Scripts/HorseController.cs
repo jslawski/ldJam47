@@ -201,7 +201,7 @@ public class HorseController : MonoBehaviour
             finalAimDirection = new Vector3(aimDirection.x, 0, aimDirection.y);
             normalizedMagnitude = this.GetDistance(startingPosition, endPosition) / this.maxSlingshotLaunchRadius;
 
-            this.aimingLine.SetPosition(1, this.aimingLine.GetPosition(0) + finalAimDirection* 10);
+            this.aimingLine.SetPosition(1, this.aimingLine.GetPosition(0) + finalAimDirection* 30);
 
             yield return null;
         }
