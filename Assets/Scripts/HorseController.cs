@@ -54,6 +54,14 @@ public class HorseController : MonoBehaviour
     [SerializeField]
     private ParticleSystem wrangledPointsParticles;
 
+    public AudioSource wrangledSound;
+    public AudioSource coinSound;
+    public AudioSource rareBoiSound;
+    public AudioSource lassoThrowSound;
+    public AudioSource stepSound;
+
+    private Coroutine stepSoundCoroutine;
+
     private void PauseVelocityMovement()
     {
         this.Body.velocity = Vector3.zero;
@@ -98,6 +106,11 @@ public class HorseController : MonoBehaviour
     private void Update()
     {
         this.HandleAnimations();
+
+        if (this.playerVelocity.magnitude > 0 && this.stepSoundCoroutine == null)
+        {
+            this.stepSoundCoroutine = StartCoroutine(this.PlayStepSounds());
+        }
 
         if (GameManager.gameFinished == true)
         {
@@ -212,15 +225,20 @@ public class HorseController : MonoBehaviour
 
             yield return null;
         }
-
-        this.aimingLine.SetPosition(1, this.aimingLine.GetPosition(0));
-        this.LaunchLasso(finalAimDirection, normalizedMagnitude);
+        if (normalizedMagnitude > 0.1f)
+        {
+            this.aimingLine.SetPosition(1, this.aimingLine.GetPosition(0));
+            this.LaunchLasso(finalAimDirection, normalizedMagnitude);
+        }
     }
 
     private void LaunchLasso(Vector3 aimDirection, float magnitude)
     {
         this.lassoInstance = Instantiate(this.lassoObject, this.transform.position, new Quaternion(), this.transform);
         this.lassoInstance.GetComponent<LassoHook>().FireLasso(this.transform, aimDirection, magnitude);
+
+        this.lassoThrowSound.pitch = GameManager.instance.GetRandomSoundPitch();
+        this.lassoThrowSound.Play();
     }
 
     private void HandleLatchControls()
@@ -250,6 +268,10 @@ public class HorseController : MonoBehaviour
     {
         this.pullPointsParticles.Stop();
         this.pullPointsParticles.Play();
+
+        this.coinSound.pitch = GameManager.instance.GetRandomSoundPitch();
+        this.coinSound.Play();
+
         if (GameManager.instance != null)
         {
             GameManager.instance.IncrementScore(2);
@@ -296,6 +318,9 @@ public class HorseController : MonoBehaviour
         this.latchedBoi.SignalLatch();
         this.latchedBoiName = this.latchedBoi.boiStats.name;
         CameraFollow.InitiateShowcaseSnap(this.GetMidpoint(target.transform.position));
+
+        this.wrangledSound.pitch = GameManager.instance.GetRandomSoundPitch();
+        this.wrangledSound.Play();
     }
 
     private void LatchDisengaged()
@@ -309,9 +334,11 @@ public class HorseController : MonoBehaviour
                 particleRenderer.material = Resources.Load<Material>("Materials/Plus10");
                 break;
             case "GoldenBoi":
+                this.rareBoiSound.Play();
                 particleRenderer.material = Resources.Load<Material>("Materials/GoldBar");
                 break;
             case "Beefcake":
+                this.rareBoiSound.Play();
                 particleRenderer.material = Resources.Load<Material>("Materials/GoldBar");
                 break;
             default:
@@ -337,5 +364,17 @@ public class HorseController : MonoBehaviour
         }
 
         this.Body.velocity = this.playerVelocity;
+    }
+
+    private IEnumerator PlayStepSounds()
+    {
+        while (this.playerVelocity.magnitude > 0)
+        {
+            this.stepSound.pitch = GameManager.instance.GetRandomSoundPitch();
+            this.stepSound.Play();
+            yield return new WaitForSeconds(0.3f);
+        }
+
+        this.stepSoundCoroutine = null;
     }
 }

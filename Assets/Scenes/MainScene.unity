@@ -11033,6 +11033,7 @@ MonoBehaviour:
   lassoObject: {fileID: 5935622195295925597, guid: c573816f164b1d248b60fc4c9ef2376b,
     type: 3}
   aimingLine: {fileID: 1974714380}
+  aimingLineOriginTransform: {fileID: 0}
   animatorStateMachine: {fileID: 710982308}
   characterSprite: {fileID: 710982307}
   pullPointsParticles: {fileID: 249951488}
@@ -11550,6 +11551,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCharacter: {fileID: 1148966350}
+  verticalViewportThreshold: 0.5
+  horizontalViewportThreshold: 0.5
 --- !u!4 &1888064355
 Transform:
   m_ObjectHideFlags: 0
@@ -11581,6 +11584,9 @@ MonoBehaviour:
   gameTimer: {fileID: 274550074}
   timePerRoundInSeconds: 60
   gameOverPanel: {fileID: 1290998553}
+  countdown: {fileID: 0}
+  preGameState: 1
+  fadePanel: {fileID: 0}
 --- !u!1 &1974714378
 GameObject:
   m_ObjectHideFlags: 0

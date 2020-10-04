@@ -96,4 +96,9 @@ public class GameManager : MonoBehaviour
         this.fadePanel.OnFadeSequenceComplete -= this.ReturnToTitle;
         SceneManager.LoadScene(0);
     }
+
+    public float GetRandomSoundPitch()
+    {
+        return Random.Range(0.9f, 1.1f);
+    }
 }

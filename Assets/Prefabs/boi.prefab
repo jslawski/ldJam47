@@ -4824,6 +4824,7 @@ MonoBehaviour:
   characterAnimator: {fileID: 2943634871944271380}
   characterSprite: {fileID: 3898083695240328141}
   goldenBoiSparkle: {fileID: 3304718285490638692}
+  wrangledSound: {fileID: 0}
 --- !u!65 &8436561571764320851
 BoxCollider:
   m_ObjectHideFlags: 0
