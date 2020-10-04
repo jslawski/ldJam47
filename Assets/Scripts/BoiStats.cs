@@ -19,6 +19,9 @@ public class BoiStats : ScriptableObject
     public float minTimeBeforeDirectionChange;
     public float maxTimeBeforeDirectionChange;
 
+    //SpriteStuff
+    public string animatorName;
+
     public float GetRandomDistancePulled()
     {
         return Random.Range(minDistancePulledPerClick, maxDistancePulledPerClick);

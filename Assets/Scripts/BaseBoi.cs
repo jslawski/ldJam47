@@ -13,9 +13,36 @@ public class BaseBoi : MonoBehaviour
 
     public LayerMask barrierLayerMask;
 
+    public Animator characterAnimator;
+    public SpriteRenderer characterSprite;
+
     private void Start()
     {
+        this.characterAnimator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animators/" + this.boiStats.animatorName);
+
         StartCoroutine(this.MoveInDirection());
+    }
+
+    //Use this to handle animation stuff
+    private void Update()
+    {
+        if (this.currentMoveDirection.x > 0)
+        {
+            this.characterSprite.flipX = true;
+        }
+        else
+        {
+            this.characterSprite.flipX = false;
+        }
+
+        if (this.currentMoveDirection.magnitude > 0)
+        {
+            this.characterAnimator.SetBool("moving", true);
+        }
+        else
+        {
+            this.characterAnimator.SetBool("moving", false);
+        }
     }
 
     private Vector3 GetRandomMoveDirection()
@@ -53,6 +80,7 @@ public class BaseBoi : MonoBehaviour
             yield return null;
         }
 
+        this.currentMoveDirection = Vector3.zero;
         StartCoroutine(this.StayIdle());
     }
 
@@ -74,6 +102,12 @@ public class BaseBoi : MonoBehaviour
         float zValue = Mathf.Pow(position2.z - position1.z, 2);
 
         return Mathf.Sqrt(xValue + zValue);
+    }
+
+    public void SignalLatch()
+    {
+        this.characterAnimator.SetBool("latched", true);
+        StopAllCoroutines();
     }
 
     public void PullTowardsPosition(Vector3 targetPosition)

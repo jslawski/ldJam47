@@ -259,11 +259,18 @@ public class HorseController : MonoBehaviour
 
     private void LatchInitiated(GameObject target)
     {
+        //Only latch one boi at a time
+        if (this.latchedBoi != null)
+        {
+            return;
+        }
+
         this.PauseVelocityMovement();
         this.currentPlayerState = PlayerState.Latched;
         this.latchedBoi = target.GetComponent<BaseBoi>();
         this.latchedBoi.OnCapture += LatchDisengaged;
         this.latchedBoi.StopAllCoroutines();
+        this.latchedBoi.SignalLatch();
         CameraFollow.InitiateShowcaseSnap(this.GetMidpoint(target.transform.position));
     }
 

@@ -23,3 +23,4 @@ MonoBehaviour:
   maxTimeSpentIdling: 4
   minTimeBeforeDirectionChange: 3
   maxTimeBeforeDirectionChange: 5
+  animatorName: EPAnimator
