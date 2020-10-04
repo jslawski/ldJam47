@@ -57,6 +57,12 @@ public class HorseController : MonoBehaviour
         return Mathf.Sqrt(xValue + yValue);
     }
 
+    //Gets midpoint between this game object and another designated position
+    private Vector3 GetMidpoint(Vector3 otherObjectPosition)
+    {
+        return new Vector3((this.transform.position.x + otherObjectPosition.x) / 2, 0, (this.transform.position.z + otherObjectPosition.z) / 2);
+    }
+
     private void Start()
     {
         this.Body = GetComponent<Rigidbody>();
@@ -200,6 +206,7 @@ public class HorseController : MonoBehaviour
         this.latchedBoi = target.GetComponent<BaseBoi>();
         this.latchedBoi.OnCapture += LatchDisengaged;
         this.latchedBoi.StopAllCoroutines();
+        CameraFollow.InitiateShowcaseSnap(this.GetMidpoint(target.transform.position));
     }
 
     private void LatchDisengaged()
@@ -207,6 +214,7 @@ public class HorseController : MonoBehaviour
         //this.latchedBoi.OnCapture -= LatchDisengaged;
         this.latchedBoi = null;
         this.currentPlayerState = PlayerState.Moving;
+        CameraFollow.ReturnToFollow();
     }
 
     private void FixedUpdate()

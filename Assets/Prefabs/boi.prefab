@@ -110,7 +110,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &5200707521044747030
 MonoBehaviour:
@@ -125,3 +125,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boiStats: {fileID: 11400000, guid: cd1a3895a19a3384cb2117ecf1098571, type: 2}
+  barrierLayerMask:
+    serializedVersion: 2
+    m_Bits: 768

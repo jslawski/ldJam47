@@ -11,6 +11,8 @@ public class BaseBoi : MonoBehaviour
     public event BoiCaptured OnCapture;
     private Vector3 currentMoveDirection;
 
+    public LayerMask barrierLayerMask;
+
     private void Start()
     {
         StartCoroutine(this.MoveInDirection());
@@ -87,8 +89,12 @@ public class BaseBoi : MonoBehaviour
             RandomBoiGenerator.boiCount--;
             GameManager.instance.IncrementScore(this.boiStats.pointValue);
             Destroy(this.gameObject);
-            Debug.LogError("EARNED " + this.boiStats.pointValue + " POINTS!");
-            //Assign Point value
         }
+    }
+
+    //Change direction if a boi enters a barrier collider
+    public void OnCollisionEnter(Collision collision)
+    {
+        this.currentMoveDirection = -this.currentMoveDirection;
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -13,12 +14,29 @@ public class CameraFollow : MonoBehaviour
     private float verticalViewportThreshold = 0.3f;
     private float horizontalViewportThreshold = 0.4f;
 
+    private static bool followPlayer = true;
+    private static Vector3 showcasePoint;
+    private static bool snapInitiated = false;
+    private float snapSpeed = 0.3f;
+    private float originalYValue;
+    private bool returnZoomInitiated = false; 
+
     void Awake()
     {
         CameraFollow.instance = this;
         this.thisCamera = this.gameObject.GetComponentInChildren<Camera>();
         this.cameraTransform = this.gameObject.transform;
         this.cameraDistance = this.cameraTransform.position.y;
+        this.originalYValue = this.transform.position.y;
+    }
+
+    private float GetDistance(Vector3 position1, Vector3 position2)
+    {
+        float xValue = Mathf.Pow(position2.x - position1.x, 2);
+        float yValue = Mathf.Pow(position2.y - position1.y, 2);
+        float zValue = Mathf.Pow(position2.z - position1.z, 2);
+
+        return Mathf.Sqrt(xValue + yValue + zValue);
     }
 
     private bool IsPlayerPastHorizontalThreshold(float playerViewportXPosition)
@@ -35,17 +53,69 @@ public class CameraFollow : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 playerViewportPosition = thisCamera.WorldToViewportPoint(this.playerCharacter.gameObject.transform.position);
-
-        if (this.playerCharacter != null && this.IsPlayerPastVerticalThreshold(playerViewportPosition.y))
+        //Normally follow the player
+        if (followPlayer == true)
         {
-            this.UpdateCameraVerticalPosition();
+            if (this.transform.position.y != this.originalYValue)
+            {
+                if (this.returnZoomInitiated == false)
+                {
+                    StartCoroutine(this.SnapToPoint(new Vector3(this.transform.position.x, this.originalYValue, this.transform.position.z)));
+                    this.returnZoomInitiated = true;
+                }
+                return;
+            }
+
+            Vector3 playerViewportPosition = thisCamera.WorldToViewportPoint(this.playerCharacter.gameObject.transform.position);
+
+            if (this.playerCharacter != null && this.IsPlayerPastVerticalThreshold(playerViewportPosition.y))
+            {
+                this.UpdateCameraVerticalPosition();
+            }
+
+            if (this.IsPlayerPastHorizontalThreshold(playerViewportPosition.x))
+            {
+                this.UpdateCameraHorizontalPosition();
+            }
+        }
+        //Otherwise, focus on the midpoint between the player and a latched boi
+        else
+        {
+            if (snapInitiated == false)
+            {
+                StartCoroutine(this.SnapToPoint(showcasePoint));
+                snapInitiated = true;
+            }
+        }
+    }
+
+    private IEnumerator SnapToPoint(Vector3 targetPoint)
+    {
+        Debug.LogError("Current Camera Position: " + this.transform.position);
+        Debug.LogError("Target Position: " + targetPoint);
+        Debug.LogError("Distance: " + this.GetDistance(this.transform.position, targetPoint));
+
+        while (this.GetDistance(this.transform.position, targetPoint) > 0.01f)
+        {
+            this.transform.position = Vector3.Lerp(this.transform.position, targetPoint, this.snapSpeed);
+            yield return null;
         }
 
-        if (this.IsPlayerPastHorizontalThreshold(playerViewportPosition.x))
-        {
-            this.UpdateCameraHorizontalPosition();
-        }
+        this.transform.position = targetPoint;
+        this.returnZoomInitiated = false;
+    }
+
+    public static void InitiateShowcaseSnap(Vector3 targetPoint)
+    {
+        showcasePoint = targetPoint;
+        followPlayer = false;
+    }
+
+    public static void ReturnToFollow()
+    {
+        showcasePoint = Vector3.zero;
+        followPlayer = true;
+        snapInitiated = false;
     }
 
     private void UpdateCameraVerticalPosition()
