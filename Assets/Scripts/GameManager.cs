@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     public GameObject countdown;
     public bool preGameState = true;
 
+    public FadePanelManager fadePanel;
+
     private void Awake()
     {
         if (instance == null)
@@ -31,6 +33,8 @@ public class GameManager : MonoBehaviour
 
         this.currentPlayerScore = 0;
         gameFinished = false;
+
+        this.fadePanel.FadeFromBlack();
     }
 
     private void Start()
@@ -70,6 +74,13 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        this.fadePanel.OnFadeSequenceComplete += this.ReloadScene;
+        this.fadePanel.FadeToBlack();
+    }
+
+    private void ReloadScene()
+    {
+        this.fadePanel.OnFadeSequenceComplete -= this.ReloadScene;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

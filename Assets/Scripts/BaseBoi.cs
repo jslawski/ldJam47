@@ -124,7 +124,7 @@ public class BaseBoi : MonoBehaviour
 
         this.transform.Translate(targetDirection.normalized * distancePulled);
 
-        if (this.GetDistance(this.transform.position, targetPosition) < 0.5f)
+        if (this.GetDistance(this.transform.position, targetPosition) < this.boiStats.maxDistancePulledPerClick)
         {
             this.OnCapture();
             RandomBoiGenerator.boiCount--;

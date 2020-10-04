@@ -11,8 +11,8 @@ public class CameraFollow : MonoBehaviour
     private Transform cameraTransform;
     private float cameraDistance;
 
-    private float verticalViewportThreshold = 0.3f;
-    private float horizontalViewportThreshold = 0.4f;
+    private float verticalViewportThreshold = 0.48f;
+    private float horizontalViewportThreshold = 0.48f;
 
     private static bool followPlayer = true;
     private static Vector3 showcasePoint;
@@ -67,14 +67,14 @@ public class CameraFollow : MonoBehaviour
 
     private bool IsPlayerPastHorizontalThreshold(float playerViewportXPosition)
     {
-        return (playerViewportXPosition > (1.0f - this.horizontalViewportThreshold)) ||
-            (playerViewportXPosition < (0.0f + this.horizontalViewportThreshold));
+        return (playerViewportXPosition >= (1.0f - this.horizontalViewportThreshold)) ||
+            (playerViewportXPosition <= (0.0f + this.horizontalViewportThreshold));
     }
 
     private bool IsPlayerPastVerticalThreshold(float playerViewportYPosition)
     {
-        return (playerViewportYPosition > (1.0f - this.verticalViewportThreshold)) ||
-            (playerViewportYPosition < (0.0f + this.verticalViewportThreshold));
+        return (playerViewportYPosition >= (1.0f - this.verticalViewportThreshold)) ||
+            (playerViewportYPosition <= (0.0f + this.verticalViewportThreshold));
     }
 
     void FixedUpdate()

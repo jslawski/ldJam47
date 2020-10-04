@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 278ccc2ca21c0e44cad2ede7557acf96, type: 3}
-  m_Name: EasyPinkie
+  m_Name: Beefcake
   m_EditorClassIdentifier: 
-  pointValue: 10
-  minDistancePulledPerClick: 2
-  maxDistancePulledPerClick: 3
-  boiName: EasyPinkie
-  moveSpeed: 2
-  minTimeSpentMoving: 5
-  maxTimeSpentMoving: 10
+  pointValue: 20
+  minDistancePulledPerClick: 0.5
+  maxDistancePulledPerClick: 1
+  boiName: Beefcake
+  moveSpeed: 5
+  minTimeSpentMoving: 3
+  maxTimeSpentMoving: 5
   minTimeSpentIdling: 3
-  maxTimeSpentIdling: 4
-  minTimeBeforeDirectionChange: 3
-  maxTimeBeforeDirectionChange: 5
+  maxTimeSpentIdling: 5
+  minTimeBeforeDirectionChange: 500
+  maxTimeBeforeDirectionChange: 500
   animatorName: EPAnimator

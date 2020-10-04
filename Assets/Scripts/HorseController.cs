@@ -172,9 +172,13 @@ public class HorseController : MonoBehaviour
 
     private void HandlePlayerAiming()
     {
-        if (Input.GetMouseButtonDown(0) && this.lassoInstance == null && GameManager.instance.preGameState == false)
+        if (Input.GetMouseButtonDown(0) && this.lassoInstance == null)
         {
-            StartCoroutine(HandleAiming(Camera.main.ScreenToViewportPoint(Input.mousePosition)));
+            //This is really stupid and I'm sorry
+            if (GameManager.instance == null || GameManager.instance.preGameState == false)
+            {
+                StartCoroutine(HandleAiming(Camera.main.ScreenToViewportPoint(Input.mousePosition)));
+            }
         }
     }
 
@@ -305,6 +309,9 @@ public class HorseController : MonoBehaviour
                 particleRenderer.material = Resources.Load<Material>("Materials/Plus10");
                 break;
             case "GoldenBoi":
+                particleRenderer.material = Resources.Load<Material>("Materials/GoldBar");
+                break;
+            case "Beefcake":
                 particleRenderer.material = Resources.Load<Material>("Materials/GoldBar");
                 break;
             default:

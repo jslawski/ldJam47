@@ -18,9 +18,12 @@ public class RandomBoiGenerator : MonoBehaviour
     public static int boiCount;
     private int maxNumBois = 20;
 
+    private int totalBoiCount = 0;
+
     private void Awake()
     {
         boiCount = 0;
+        totalBoiCount = 0;
         this.minFieldX = generationField.transform.position.x - (generationField.size.x / 2);
         this.maxFieldX = generationField.transform.position.x + (generationField.size.x / 2);
         this.minFieldZ = generationField.transform.position.z - (generationField.size.z / 2);
@@ -41,9 +44,19 @@ public class RandomBoiGenerator : MonoBehaviour
         float xValue = Random.Range(this.minFieldX, this.maxFieldX);
         float zValue = Random.Range(this.minFieldZ, this.maxFieldZ);
 
-        if (boiCount % 5 == 0 /*&& boiCount > 20*/)
+        if (totalBoiCount < maxNumBois)
+        {
+            this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats = Resources.Load<BoiStats>("Bois/EasyPinkie");
+        }
+        //Spawn a golden boi 1 every 10
+        else if (totalBoiCount % 10 == 0)
         {
             this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats = Resources.Load<BoiStats>("Bois/GoldenBoi");
+        }
+        //Spawn a beefcake boi 1 every 5
+        else if (totalBoiCount % 5 == 0)
+        {
+            this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats = Resources.Load<BoiStats>("Bois/Beefcake");
         }
         else
         {
@@ -53,5 +66,6 @@ public class RandomBoiGenerator : MonoBehaviour
         Vector3 worldSpaceGenerationPosition = new Vector3(xValue, 4.0f, zValue);
         GameObject objectInstance = Instantiate(this.baseBoiPrefab, worldSpaceGenerationPosition, new Quaternion()) as GameObject;
         boiCount++;
+        totalBoiCount++;
     }
 }

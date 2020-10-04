@@ -10173,6 +10173,7 @@ GameObject:
   m_Component:
   - component: {fileID: 763977113}
   - component: {fileID: 763977112}
+  - component: {fileID: 763977111}
   m_Layer: 0
   m_Name: CameraHolder
   m_TagString: Untagged
@@ -10180,6 +10181,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &763977111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763977110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe8696ad53ed5a448429619d169729a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadePanel: {fileID: 1079670641}
+  tutorialBoi: {fileID: 1239033102}
 --- !u!114 &763977112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12289,8 +12304,9 @@ GameObject:
   - component: {fileID: 1079670638}
   - component: {fileID: 1079670640}
   - component: {fileID: 1079670639}
+  - component: {fileID: 1079670641}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: FadePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12351,6 +12367,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1079670637}
   m_CullTransparentMesh: 0
+--- !u!114 &1079670641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079670637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 993b780d75ece7a43b7e1efff4f41395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadePanel: {fileID: 1079670639}
 --- !u!1001 &1079816568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13724,6 +13753,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b4352c9ae785cb4da3702ad3109a3cb, type: 3}
+--- !u!1 &1239033102 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5200707521044747024, guid: 92c274df235318c4bb36b650b00cb164,
+    type: 3}
+  m_PrefabInstance: {fileID: 537521186}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1241580585
 GameObject:
   m_ObjectHideFlags: 0
@@ -14096,7 +14131,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284759470}
   m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
-  m_LocalPosition: {x: 1.3508567, y: 7.8510833, z: -0.6841643}
+  m_LocalPosition: {x: 0, y: 7.8510833, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 763977113}
