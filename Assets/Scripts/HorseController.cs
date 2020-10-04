@@ -77,6 +77,12 @@ public class HorseController : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.gameFinished == true)
+        {
+            this.PauseVelocityMovement();
+            return;
+        }
+
         this.aimingLine.SetPosition(0, this.transform.position);
         this.aimingLine.SetPosition(1, this.transform.position);
 
@@ -158,6 +164,7 @@ public class HorseController : MonoBehaviour
         this.latchedBoi.OnCapture += LatchDisengaged;
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
         {
+            GameManager.instance.IncrementScore(2);
             this.latchedBoi.PullTowardsPosition(this.transform.position);
         }
     }

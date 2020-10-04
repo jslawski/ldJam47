@@ -85,6 +85,7 @@ public class BaseBoi : MonoBehaviour
         {
             this.OnCapture();
             RandomBoiGenerator.boiCount--;
+            GameManager.instance.IncrementScore(this.boiStats.pointValue);
             Destroy(this.gameObject);
             Debug.LogError("EARNED " + this.boiStats.pointValue + " POINTS!");
             //Assign Point value

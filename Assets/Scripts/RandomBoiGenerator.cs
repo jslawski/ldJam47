@@ -20,6 +20,7 @@ public class RandomBoiGenerator : MonoBehaviour
 
     private void Awake()
     {
+        boiCount = 0;
         this.minFieldX = generationField.transform.position.x - (generationField.size.x / 2);
         this.maxFieldX = generationField.transform.position.x + (generationField.size.x / 2);
         this.minFieldZ = generationField.transform.position.z - (generationField.size.z / 2);
