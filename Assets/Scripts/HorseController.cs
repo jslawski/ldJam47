@@ -62,6 +62,11 @@ public class HorseController : MonoBehaviour
 
     private Coroutine stepSoundCoroutine;
 
+    public float GetRandomSoundPitch()
+    {
+        return Random.Range(0.9f, 1.1f);
+    }
+
     private void PauseVelocityMovement()
     {
         this.Body.velocity = Vector3.zero;
@@ -237,7 +242,7 @@ public class HorseController : MonoBehaviour
         this.lassoInstance = Instantiate(this.lassoObject, this.transform.position, new Quaternion(), this.transform);
         this.lassoInstance.GetComponent<LassoHook>().FireLasso(this.transform, aimDirection, magnitude);
 
-        this.lassoThrowSound.pitch = GameManager.instance.GetRandomSoundPitch();
+        this.lassoThrowSound.pitch = this.GetRandomSoundPitch();
         this.lassoThrowSound.Play();
     }
 
@@ -269,7 +274,7 @@ public class HorseController : MonoBehaviour
         this.pullPointsParticles.Stop();
         this.pullPointsParticles.Play();
 
-        this.coinSound.pitch = GameManager.instance.GetRandomSoundPitch();
+        this.coinSound.pitch = this.GetRandomSoundPitch();
         this.coinSound.Play();
 
         if (GameManager.instance != null)
@@ -319,7 +324,7 @@ public class HorseController : MonoBehaviour
         this.latchedBoiName = this.latchedBoi.boiStats.name;
         CameraFollow.InitiateShowcaseSnap(this.GetMidpoint(target.transform.position));
 
-        this.wrangledSound.pitch = GameManager.instance.GetRandomSoundPitch();
+        this.wrangledSound.pitch = this.GetRandomSoundPitch();
         this.wrangledSound.Play();
     }
 
@@ -370,7 +375,7 @@ public class HorseController : MonoBehaviour
     {
         while (this.playerVelocity.magnitude > 0)
         {
-            this.stepSound.pitch = GameManager.instance.GetRandomSoundPitch();
+            this.stepSound.pitch = this.GetRandomSoundPitch();
             this.stepSound.Play();
             yield return new WaitForSeconds(0.3f);
         }

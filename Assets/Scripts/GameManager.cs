@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
 
     public FadePanelManager fadePanel;
 
+    public AudioSource backgroundMusic;
+
     private void Awake()
     {
         if (instance == null)
@@ -35,6 +37,8 @@ public class GameManager : MonoBehaviour
         gameFinished = false;
 
         this.fadePanel.FadeFromBlack();
+
+        this.backgroundMusic = GameObject.Find("BGM").GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -94,6 +98,8 @@ public class GameManager : MonoBehaviour
     {
         gameFinished = false;
         this.fadePanel.OnFadeSequenceComplete -= this.ReturnToTitle;
+        this.backgroundMusic.Stop();
+        Destroy(this.backgroundMusic.gameObject);
         SceneManager.LoadScene(0);
     }
 
