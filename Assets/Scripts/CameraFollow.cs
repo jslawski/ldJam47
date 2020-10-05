@@ -185,7 +185,7 @@ public class CameraFollow : MonoBehaviour
 
         this.cumulativeYZoom += this.impactZoomAmount;
 
-        Debug.LogError("Cumulative Y Zoom: " + this.cumulativeYZoom);
+        //Debug.LogError("Cumulative Y Zoom: " + this.cumulativeYZoom);
 
         Vector3 targetPoint = new Vector3(showcasePoint.x, this.transform.position.y - this.impactZoomAmount, showcasePoint.z);
 

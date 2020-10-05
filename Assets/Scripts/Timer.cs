@@ -46,11 +46,11 @@ public class Timer : MonoBehaviour
     {
         if (TimerValueInSeconds <= 0.0F)
         {
-            TimerText.text = "00:00";
+            TimerText.text = "0:00";
             return;
         }
 
-        string minutes = Mathf.Floor(TimerValueInSeconds / 60).ToString("00");
+        string minutes = Mathf.Floor(TimerValueInSeconds / 60).ToString("0");
         string seconds = Mathf.Floor(TimerValueInSeconds % 60).ToString("00");
         TimerText.text = string.Format("{0}:{1}", minutes, seconds);
     }
