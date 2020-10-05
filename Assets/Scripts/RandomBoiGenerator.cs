@@ -28,6 +28,16 @@ public class RandomBoiGenerator : MonoBehaviour
         this.maxFieldX = generationField.transform.position.x + (generationField.size.x / 2);
         this.minFieldZ = generationField.transform.position.z - (generationField.size.z / 2);
         this.maxFieldZ = generationField.transform.position.z + (generationField.size.z / 2);
+
+        this.GenerateInitialBois();
+    }
+
+    private void GenerateInitialBois()
+    {
+        for (int i = 0; i < this.maxNumBois; i++)
+        {
+            GenerateEasyPinkie();
+        }
     }
 
     private void Update()
@@ -38,6 +48,18 @@ public class RandomBoiGenerator : MonoBehaviour
         }
     }
 
+    private void GenerateEasyPinkie()
+    {
+        float xValue = Random.Range(this.minFieldX, this.maxFieldX);
+        float zValue = Random.Range(this.minFieldZ, this.maxFieldZ);
+        
+        this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats = Resources.Load<BoiStats>("Bois/EasyPinkie");
+
+        Vector3 worldSpaceGenerationPosition = new Vector3(xValue, 4.0f, zValue);
+        GameObject objectInstance = Instantiate(this.baseBoiPrefab, worldSpaceGenerationPosition, new Quaternion()) as GameObject;
+        boiCount++;
+    }
+
     public void GenerateRandomBoi()
     {
         float xValue = Random.Range(this.minFieldX, this.maxFieldX);
@@ -45,12 +67,8 @@ public class RandomBoiGenerator : MonoBehaviour
 
         totalBoiCount++;
 
-        if (totalBoiCount < maxNumBois)
-        {
-            this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats = Resources.Load<BoiStats>("Bois/EasyPinkie");
-        }
-        //Spawn a golden boi 1 every 7
-        else if (totalBoiCount % 7 == 0)
+        //Spawn a golden boi 1 every 12
+        if (totalBoiCount % 12 == 0)
         {
             this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats = Resources.Load<BoiStats>("Bois/GoldenBoi");
         }
@@ -63,6 +81,8 @@ public class RandomBoiGenerator : MonoBehaviour
         {
             this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats = Resources.Load<BoiStats>("Bois/EasyPinkie");
         }
+
+        Debug.LogError("Boi #" + totalBoiCount + " is a " + this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats.boiName);
 
         Vector3 worldSpaceGenerationPosition = new Vector3(xValue, 4.0f, zValue);
         GameObject objectInstance = Instantiate(this.baseBoiPrefab, worldSpaceGenerationPosition, new Quaternion()) as GameObject;
