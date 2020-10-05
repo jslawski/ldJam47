@@ -82,8 +82,6 @@ public class RandomBoiGenerator : MonoBehaviour
             this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats = Resources.Load<BoiStats>("Bois/EasyPinkie");
         }
 
-        Debug.LogError("Boi #" + totalBoiCount + " is a " + this.baseBoiPrefab.GetComponent<BaseBoi>().boiStats.boiName);
-
         Vector3 worldSpaceGenerationPosition = new Vector3(xValue, 4.0f, zValue);
         GameObject objectInstance = Instantiate(this.baseBoiPrefab, worldSpaceGenerationPosition, new Quaternion()) as GameObject;
         boiCount++;

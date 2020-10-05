@@ -11,11 +11,15 @@ public class TutorialManager : MonoBehaviour
     [SerializeField]
     private GameObject tutorialBoi;
 
+    [SerializeField]
+    private GameObject pullTutorialImage;
+
     private Coroutine transitioningCoroutine;
 
     private void Awake()
     {
         this.fadePanel.FadeFromBlack();
+        LassoTip.OnLatched += this.DisplayPullTutorialImage;
     }
 
     private void BeginTransitionToGame()
@@ -42,14 +46,11 @@ public class TutorialManager : MonoBehaviour
         {
             this.BeginTransitionToGame();
         }
-        
-        /*if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            this.fadePanel.FadeFromBlack();
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            this.fadePanel.FadeToBlack();
-        }*/
+    }
+
+    private void DisplayPullTutorialImage(GameObject target)
+    {
+        LassoTip.OnLatched -= this.DisplayPullTutorialImage;
+        this.pullTutorialImage.SetActive(true);
     }
 }

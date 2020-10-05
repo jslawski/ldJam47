@@ -344,7 +344,7 @@ public class HorseController : MonoBehaviour
                 break;
             case "Beefcake":
                 this.rareBoiSound.Play();
-                particleRenderer.material = Resources.Load<Material>("Materials/GoldBar");
+                particleRenderer.material = Resources.Load<Material>("Materials/MoneyBag");
                 break;
             default:
                 Debug.LogError("Error: Unknown Boi Type=" + this.latchedBoi.boiStats.boiName);
