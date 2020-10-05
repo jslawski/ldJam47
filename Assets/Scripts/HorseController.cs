@@ -252,6 +252,8 @@ public class HorseController : MonoBehaviour
 
     private void HandleLatchControls()
     {
+        //This is silly, just roll with it
+        this.latchedBoi.OnCapture -= LatchDisengaged;
         this.latchedBoi.OnCapture += LatchDisengaged;
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
