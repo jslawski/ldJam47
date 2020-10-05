@@ -227,6 +227,17 @@ public class TitleScreenCameraFollow : MonoBehaviour
     private void LoadTutorialScene()
     {
         this.fadePanel.OnFadeSequenceComplete -= this.LoadTutorialScene;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
+    }
+
+    public void OnQuitButtonClicked()
+    {
+        this.fadePanel.OnFadeSequenceComplete += this.QuitGame;
+        this.fadePanel.FadeToBlack();
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

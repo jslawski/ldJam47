@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
         this.fadePanel.OnFadeSequenceComplete -= this.ReturnToTitle;
         this.backgroundMusic.Stop();
         Destroy(this.backgroundMusic.gameObject);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public float GetRandomSoundPitch()
