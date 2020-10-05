@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 278ccc2ca21c0e44cad2ede7557acf96, type: 3}
   m_Name: GoldenBoi
   m_EditorClassIdentifier: 
-  pointValue: 50
+  pointValue: 200
   minDistancePulledPerClick: 0.5
   maxDistancePulledPerClick: 1
   boiName: GoldenBoi

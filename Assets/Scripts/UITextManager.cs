@@ -29,4 +29,9 @@ public class UITextManager : MonoBehaviour
         this.beefcakeCount.text = GameManager.instance.beefcakeCount.ToString();
         this.goldenBoiCount.text = GameManager.instance.goldenBoiCount.ToString();
     }
+
+    private void Start()
+    {
+        VoiceLineManager.instance.PlayRandomEndLine();
+    }
 }

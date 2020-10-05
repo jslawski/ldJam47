@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public FadePanelManager fadePanel;
 
     public AudioSource backgroundMusic;
+    public GameObject voicelineObject;
 
     public int easyPinkieCount = 0;
     public int beefcakeCount = 0;
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
         this.fadePanel.FadeFromBlack();
 
         this.backgroundMusic = GameObject.Find("BGM").GetComponent<AudioSource>();
+        this.voicelineObject = GameObject.Find("VoiceLineManager");
     }
 
     private void Start()
@@ -106,6 +108,7 @@ public class GameManager : MonoBehaviour
         this.fadePanel.OnFadeSequenceComplete -= this.ReturnToTitle;
         this.backgroundMusic.Stop();
         Destroy(this.backgroundMusic.gameObject);
+        Destroy(this.voicelineObject);
         SceneManager.LoadScene(1);
     }
 

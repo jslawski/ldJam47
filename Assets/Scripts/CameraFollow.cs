@@ -45,6 +45,7 @@ public class CameraFollow : MonoBehaviour
 
         isometricZOffset = this.GetIsometricZOffset();
         this.cumulativeYZoom = 0;
+        ReturnToFollow();
     }
 
     private float GetIsometricZOffset()
@@ -112,6 +113,7 @@ public class CameraFollow : MonoBehaviour
         {
             if (snapInitiated == false)
             {
+                StopAllCoroutines();
                 this.SnapCoroutine = StartCoroutine(this.SnapToPoint(showcasePoint));
                 snapInitiated = true;
             }
@@ -184,8 +186,6 @@ public class CameraFollow : MonoBehaviour
         }
 
         this.cumulativeYZoom += this.impactZoomAmount;
-
-        //Debug.LogError("Cumulative Y Zoom: " + this.cumulativeYZoom);
 
         Vector3 targetPoint = new Vector3(showcasePoint.x, this.transform.position.y - this.impactZoomAmount, showcasePoint.z);
 

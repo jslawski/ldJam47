@@ -53,6 +53,11 @@ public class TitleScreenCameraFollow : MonoBehaviour
         this.fadePanel.FadeFromBlack();
     }
 
+    private void Start()
+    {
+        VoiceLineManager.instance.PlayRandomWelcomeLine();
+    }
+
     private float GetIsometricZOffset()
     {
         return Camera.main.transform.position.y * Mathf.Tan(Camera.main.transform.rotation.x);

@@ -22,6 +22,11 @@ public class TutorialManager : MonoBehaviour
         LassoTip.OnLatched += this.DisplayPullTutorialImage;
     }
 
+    private void Start()
+    {
+        VoiceLineManager.instance.PlayTutorialLine();
+    }
+
     private void BeginTransitionToGame()
     {
        this.transitioningCoroutine = StartCoroutine(this.TransitionToGame());
