@@ -62,6 +62,10 @@ public class HorseController : MonoBehaviour
 
     private Coroutine stepSoundCoroutine;
 
+    private float beginningIncrementalPitch = 0.8f;
+    private float currentIncrementalPitch = 0.8f;
+    private float incrementalPitchStep = 0.05f;
+
     public float GetRandomSoundPitch()
     {
         return Random.Range(0.9f, 1.1f);
@@ -269,13 +273,20 @@ public class HorseController : MonoBehaviour
         }
     }
 
+    private void UpdateIncrementalPitch()
+    {
+        this.currentIncrementalPitch += this.incrementalPitchStep;
+    }
+
     private void HandleScore()
     {
         this.pullPointsParticles.Stop();
         this.pullPointsParticles.Play();
 
-        this.coinSound.pitch = this.GetRandomSoundPitch();
+
+        this.coinSound.pitch = this.currentIncrementalPitch;
         this.coinSound.Play();
+        this.UpdateIncrementalPitch();
 
         if (GameManager.instance != null)
         {
@@ -315,6 +326,8 @@ public class HorseController : MonoBehaviour
             return;
         }
 
+        this.currentIncrementalPitch = this.beginningIncrementalPitch;
+
         this.PauseVelocityMovement();
         this.currentPlayerState = PlayerState.Latched;
         this.latchedBoi = target.GetComponent<BaseBoi>();
@@ -335,16 +348,21 @@ public class HorseController : MonoBehaviour
         switch (this.latchedBoiName)
         {
             case "EasyPinkie":
+                particleRenderer.material = Resources.Load<Material>("Materials/Plus10");
+                GameManager.instance.easyPinkieCount++;
+                break;
             case "TutorialBoi":
                 particleRenderer.material = Resources.Load<Material>("Materials/Plus10");
                 break;
             case "GoldenBoi":
                 this.rareBoiSound.Play();
                 particleRenderer.material = Resources.Load<Material>("Materials/GoldBar");
+                GameManager.instance.goldenBoiCount++;
                 break;
             case "Beefcake":
                 this.rareBoiSound.Play();
                 particleRenderer.material = Resources.Load<Material>("Materials/MoneyBag");
+                GameManager.instance.beefcakeCount++;
                 break;
             default:
                 Debug.LogError("Error: Unknown Boi Type=" + this.latchedBoi.boiStats.boiName);

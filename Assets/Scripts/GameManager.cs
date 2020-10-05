@@ -26,6 +26,10 @@ public class GameManager : MonoBehaviour
 
     public AudioSource backgroundMusic;
 
+    public int easyPinkieCount = 0;
+    public int beefcakeCount = 0;
+    public int goldenBoiCount = 0;
+
     private void Awake()
     {
         if (instance == null)
@@ -65,6 +69,8 @@ public class GameManager : MonoBehaviour
         gameFinished = true;
         this.gameOverPanel.SetActive(true);
         gameTimer.OnTimerEnded -= this.GameCompleted;
+
+        CameraFollow.instance.StopAllCoroutines();
     }
 
     public void IncrementScore(int scoreAmount)
